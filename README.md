@@ -12,13 +12,6 @@ This repository contains docker images for infrastructure.
 * base-{PLATFORM}
   * example: base-linux
   * example: base-windows
-* base-service-{PLATFORM}
-  * example: base-service-linux
-  * example: base-service-windows
-* base-service-{TECHNOLOGY}-{PLATFORM}-{CONDITIONS}]
-  * example: base-service-csharp-linux
-  * example: base-service-nodejs-linux
-  * example: base-service-nodejs-linux-preview
 * additional-{PLATFORM}
   * example: sonarqube-linux
   * example: postgresql-linux
@@ -26,8 +19,6 @@ This repository contains docker images for infrastructure.
 ### Legend
 
 * {PLATFORM}   = target platform (e.g. linux, windows)
-* {TECHNOLOGY} = target technology (e.g. csharp, nodejs)
-* {CONDITIONS} = additional condition (e.g. preview)
 
 ### REMARKS
 
@@ -36,9 +27,6 @@ This repository contains docker images for infrastructure.
 ## Images organizations
 
 * base-linux
-  * base-service-linux
-    * base-service-csharp-linux
-    * base-service-nodejs-linux
   * mongodb-linux
   * postgresql-linux
   * xwiki-linux
