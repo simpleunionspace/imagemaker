@@ -12,13 +12,13 @@ This repository contains docker images for infrastructure.
 * base-{PLATFORM}
   * example: base-linux
   * example: base-windows
-* additional-{PLATFORM}
+* {NAME}-{PLATFORM}
   * example: sonarqube-linux
   * example: postgresql-linux
 
 ### Legend
 
-* {PLATFORM}   = target platform (e.g. linux, windows)
+* {PLATFORM} = target platform (e.g. linux, windows)
 
 ### REMARKS
 
@@ -27,10 +27,13 @@ This repository contains docker images for infrastructure.
 ## Images organizations
 
 * base-linux
-  * mongodb-linux
+  * mssql-linux
   * postgresql-linux
+  * mysql-linux
+  * mongodb-linux
+  * rabbitmq-linux
   * xwiki-linux
   * rocketchat-linux
-  * jenkins-linux
   * nexus-linux
+  * jenkins-linux
   * sonarqube-linux

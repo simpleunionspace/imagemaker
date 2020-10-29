@@ -1,7 +1,7 @@
 # INFO
 FROM centos:8
 LABEL name="base linux image" \
-      vendor="Life-Pain"
+      vendor="Simple Union"
 
 # BUILD
 # prepare
