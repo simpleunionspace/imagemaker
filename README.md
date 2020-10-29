@@ -2,6 +2,12 @@
 
 This repository contains docker images for infrastructure.
 
+* on GitHub
+  * [docker images](https://github.com/simpleunionspace/docker-images)
+
+* on Docker Hub
+  * [docker images](https://hub.docker.com/u/lifepainspace)
+
 ## Repository structure
 
 * src  - source files
@@ -12,7 +18,7 @@ This repository contains docker images for infrastructure.
 * base-{PLATFORM}
   * example: base-linux
   * example: base-windows
-* {NAME}-{PLATFORM}
+* [COMPANY-]{NAME}-{PLATFORM}
   * example: sonarqube-linux
   * example: postgresql-linux
 
@@ -27,7 +33,7 @@ This repository contains docker images for infrastructure.
 ## Images organizations
 
 * base-linux
-  * mssql-linux
+  * microsoft-mssql-linux
   * postgresql-linux
   * mysql-linux
   * mongodb-linux
@@ -37,3 +43,6 @@ This repository contains docker images for infrastructure.
   * nexus-linux
   * jenkins-linux
   * sonarqube-linux
+  * jetbrains-upsource-linux
+  * jetbrains-youtrack-linux
+  * jetbrains-teamcity-linux
