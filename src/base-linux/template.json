@@ -1,0 +1,82 @@
+{
+    "variables": {
+        "platfrom": "linux",
+        "image_base_name": "",
+        "image_base_version": "",
+        "image_tag_suffix": "",
+        "system_packages_manager": ""
+    },
+    "builders": [
+        {
+            "name": "linux-{{user `image_base_name`}}-{{user `image_base_version`}}",
+            "type": "docker",
+            "image": "{{user `image_base_name`}}:{{user `image_base_version`}}",
+            "pull": true,
+            "commit": true,
+            "changes": [ "VOLUME /opt/app/data",
+                         "VOLUME /opt/app/conf",
+                         "VOLUME /opt/app/logs",
+                         "VOLUME /opt/app/cache"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "rm -rf /media",
+                "rm -rf /mnt",
+                "rm -rf /srv",
+                "rm -rf /tmp/*",
+                "rm -rf /home",
+                "rm -rf /anaconda-post.log",
+                "rm -rf /etc/X11",
+                "rm -rf /var/cache/*",
+                "rm -rf /var/log/*"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "if [ \"$(grep '^ID=' /etc/os-release)\" = \"ID=\\\"centos\\\"\" ]; then yum -y install epel-release; fi"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "rm -rf /etc/localtime",
+                "ln -s /usr/share/zoneinfo/GMT /etc/localtime",
+                "{{user `system_packages_manager`}} -y update",
+                "{{user `system_packages_manager`}} -y upgrade",
+                "{{user `system_packages_manager`}} -y install less",
+                "{{user `system_packages_manager`}} -y install tree",
+                "{{user `system_packages_manager`}} -y install nano",
+                "{{user `system_packages_manager`}} -y install wget",
+                "{{user `system_packages_manager`}} -y install gettext",
+                "{{user `system_packages_manager`}} -y install telnet",
+                "{{user `system_packages_manager`}} -y install tcpdump",
+                "{{user `system_packages_manager`}} -y install strace",
+                "{{user `system_packages_manager`}} -y install htop",
+                "{{user `system_packages_manager`}} -y install unzip",
+                "{{user `system_packages_manager`}} -y autoremove",
+                "{{user `system_packages_manager`}} -y autoremove",
+                "{{user `system_packages_manager`}} -y autoremove",
+                "{{user `system_packages_manager`}} -y clean all",
+                "rm -rf /var/cache/*",
+                "rm -rf /var/log/*"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "repository": "simpleunionspace/base",
+            "tags": "{{user `platfrom`}}-{{user `image_base_name`}}-{{user `image_base_version`}}-{{user `image_tag_suffix`}}"
+        },
+        {
+            "type": "docker-tag",
+            "repository": "simpleunionspace/base",
+            "tags": "{{user `platfrom`}}-{{user `image_base_name`}}-{{user `image_base_version`}}-latest"
+        }
+    ]
+}
