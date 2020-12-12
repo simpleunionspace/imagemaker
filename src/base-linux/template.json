@@ -16,7 +16,9 @@
             "changes": [ "VOLUME /opt/app/data",
                          "VOLUME /opt/app/conf",
                          "VOLUME /opt/app/logs",
-                         "VOLUME /opt/app/cache"
+                         "VOLUME /opt/app/cache",
+                         "CMD /bin/bash",
+                         "ENTRYPOINT /bin/bash"
             ]
         }
     ],

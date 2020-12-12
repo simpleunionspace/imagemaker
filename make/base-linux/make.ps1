@@ -10,7 +10,6 @@ ${VarFiles} = @("$(Convert-Path $(Join-Path ${BasePath} '/../../src/linux-ubuntu
                 "$(Convert-Path $(Join-Path ${BasePath} '/../../src/linux-centos-8.json'))")
 
 
-
 foreach (${VarFile} in ${VarFiles})
 {
     packer build `

@@ -7,4 +7,5 @@ powershell ${BasePath}/base-linux/clean.ps1
 
 # docker prune
 docker container prune -f
-docker image prune -a -f
+docker volume prune -f
+docker image prune -f

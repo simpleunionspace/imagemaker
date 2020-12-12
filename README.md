@@ -4,9 +4,11 @@ This repository contains docker images for infrastructure.
 
 * on GitHub
   * [docker images](https://github.com/simpleunionspace/docker-images)
+    * [docs](https://simpleunionspace.github.io/docker-images/)
 
 * on Docker Hub
-  * [docker images](https://hub.docker.com/u/lifepainspace)
+  * [docker images](https://hub.docker.com/u/simpleunionspace)
+    * [base](https://hub.docker.com/r/simpleunionspace/base)
 
 ## Repository structure
 
