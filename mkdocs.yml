@@ -1,0 +1,9 @@
+docs_dir: docs
+site_dir: site
+site_name: SU docker images
+use_directory_urls: false
+repo_url: https://github.com/simpleunionspace/docker-images/docs
+nav:
+    - Home: README.md
+    - base: base/README.md
+theme: readthedocs
