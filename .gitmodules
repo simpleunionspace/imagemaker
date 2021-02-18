@@ -1,0 +1,4 @@
+[submodule "tools/powershell-scripts"]
+	path = tools/powershell-scripts
+	url = git@github.com:simpleunionspace/powershell-scripts.git
+	branch = master

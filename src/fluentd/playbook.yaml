@@ -1,0 +1,12 @@
+---
+
+- name: Include common
+  include: ../common.yaml
+
+- name: test
+  hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+    - command: echo {{ platform_name }}
+    - debug: msg="{{ platform_name }}"

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"/src/vars.yaml": "ansible",
+			"/src/common.yaml": "ansible",
+			"**/playbook.yaml": "ansible"
+		}
+	}
+}

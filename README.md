@@ -1,54 +1,50 @@
-# Base docker images
+# Images
 
-This repository contains docker images for infrastructure.
+This repository contains images for infrastructure.
 
 * on GitHub
-  * [docker images](https://github.com/simpleunionspace/docker-images)
-    * [docs](https://simpleunionspace.github.io/docker-images/)
+  * [repo](https://github.com/simpleunionspace/images)
+  * [docs](https://simpleunionspace.github.io/images/)
 
 * on Docker Hub
   * [docker images](https://hub.docker.com/u/simpleunionspace)
-    * [base](https://hub.docker.com/r/simpleunionspace/base)
 
 ## Repository structure
 
-* src  - source files
-* make - clean and build scenarios
+* docs  - documentation
+* src   - source files
+* tools - tools files
 
 ## Images naming rules
 
-* base:{PLATFORM}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
+* base:{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
   * example: base:linux-ubuntu-20.04
-  * example: base:windows-server-2019
-* [COMPANY-]{PRODUCT}:{PLATFORM}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
-  * example: microsoft-sqlserver:windows-server-2019
-  * example: postgresql:linux-ubuntu-20.04
+  * example: base:windows-nanoserver-2004
+
+* [COMPANY_NAME-]{PRODUCT_NAME}-{PRODUCT_VERSION}:{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
+  * example: microsoft-sqlserver-2019:windows-nanoserver-2004
+  * example: postgresql-13:linux-ubuntu-20.04
 
 ### Legend
 
-* {PLATFORM}           = target platform (e.g. linux, windows)
+* [COMPANY_NAME-]      = company name
+* {PRODUCT_NAME}       = product name
+* {PRODUCT_VERSION}    = product version
+* {PLATFORM_NAME}      = target platform name (e.g. linux, windows)
 * {IMAGE_BASE_NAME}    = target image os name
 * {IMAGE_BASE_VERSION} = target image os version
 
-### REMARKS
-
-* "-{PLATFORM}" suffix (for example, ":linux", ":windows") is optional and should be present if there are images for different platforms
-
 ## Images organizations
 
-* base:windows
-  * microsoft-sqlserver:windows
-* base:linux
-  * microsoft-sqlserver:linux
-  * postgresql:linux
-  * mysql:linux
-  * mongodb:linux
-  * rabbitmq:linux
-  * xwiki:linux
-  * rocketchat:linux
-  * nexus:linux
-  * jenkins:linux
-  * sonarqube:linux
-  * jetbrains-upsource:linux
-  * jetbrains-youtrack:linux
-  * jetbrains-teamcity:linux
+* base
+  * test
+  * fluentd
+
+## Image structure
+
+* app
+  * bin
+  * conf
+  * data
+  * logs
+  * tmp

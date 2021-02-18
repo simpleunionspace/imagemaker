@@ -1,0 +1,4 @@
+platform_name           = "linux"
+image_base_name         = "centos"
+image_base_version      = "8"
+system_packages_manager = "yum"
