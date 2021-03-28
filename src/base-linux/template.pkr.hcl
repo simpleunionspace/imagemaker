@@ -89,7 +89,11 @@ build {
 
   provisioner "shell" {
     inline = [
-      "mkdir -p /opt/app/{bin,conf,data,logs}",
+      "mkdir -p /opt/app",
+      "mkdir -p /opt/app/bin",
+      "mkdir -p /opt/app/conf",
+      "mkdir -p /opt/app/data",
+      "mkdir -p /opt/app/logs",
       "ln -s /opt/app /app",
       "rm -rf /var/cache/*",
       "rm -rf /var/log/*"
