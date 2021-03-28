@@ -1,3 +1,6 @@
+##################################################
+# Vars
+##################################################
 variable "platform_name" {
   type    = string
   default = null
@@ -24,9 +27,12 @@ variable "system_packages_manager" {
 }
 
 
+##################################################
+# Builder
+##################################################
 source "docker" "build" {
   image   = "simpleunionspace/base:${var.platform_name}-${var.image_base_name}-${var.image_base_version}"
-  pull    = true
+  pull    = false
   commit  = true
   changes = [
     "CMD /bin/bash",
@@ -35,6 +41,9 @@ source "docker" "build" {
 }
 
 
+##################################################
+# Build
+##################################################
 build {
   sources = ["source.docker.build"]
 

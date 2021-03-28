@@ -1,3 +1,6 @@
+##################################################
+# Vars
+##################################################
 variable "platform_name" {
   type    = string
   default = null
@@ -24,6 +27,9 @@ variable "system_packages_manager" {
 }
 
 
+##################################################
+# Builder
+##################################################
 source "docker" "build" {
   image   = "mcr.microsoft.com/windows/${var.image_base_name}:${var.image_base_version}"
   pull    = true
@@ -32,39 +38,59 @@ source "docker" "build" {
     "VOLUME /app/data",
     "VOLUME /app/conf",
     "VOLUME /app/logs",
-    "VOLUME /app/tmp",
     "ENV TZ=UTC",
     "ENV CUID=1000",
     "ENV CGID=1000",
-    "CMD /bin/bash",
-    "ENTRYPOINT /bin/bash"
+    "CMD powershell",
+    "ENTRYPOINT powershell"
   ]
 }
 
 
+##################################################
+# Build
+##################################################
 build {
   sources = ["source.docker.build"]
 
   provisioner "shell" {
+    scripts = [
+      "${path.root}/prepare.ps1"
+    ]
+  }
+
+  provisioner "shell" {
     inline = [
-      "rm -rf /etc/localtime",
-      "ln -s /usr/share/zoneinfo/GMT /etc/localtime",
       "${var.system_packages_manager} -y update",
       "${var.system_packages_manager} -y upgrade",
-      "${var.system_packages_manager} -y install less",
+    ]
+  }
+
+  provisioner "shell" {
+    scripts = [
+      "${path.root}/${var.image_base_name}/prepare.ps1"
+    ]
+  }
+
+  provisioner "shell" {
+    inline = [
       "${var.system_packages_manager} -y install tree",
-      "${var.system_packages_manager} -y install nano",
       "${var.system_packages_manager} -y install wget",
-      "${var.system_packages_manager} -y install gettext",
-      "${var.system_packages_manager} -y install telnet",
-      "${var.system_packages_manager} -y install tcpdump",
-      "${var.system_packages_manager} -y install strace",
+      "${var.system_packages_manager} -y install nano",
       "${var.system_packages_manager} -y install htop",
       "${var.system_packages_manager} -y install unzip",
+      "${var.system_packages_manager} -y install ansible",
       "${var.system_packages_manager} -y autoremove",
       "${var.system_packages_manager} -y autoremove",
       "${var.system_packages_manager} -y autoremove",
-      "${var.system_packages_manager} -y clean all",
+      "${var.system_packages_manager} -y clean all"
+    ]
+  }
+
+  provisioner "shell" {
+    inline = [
+      "mkdir -p /opt/app/{bin,conf,data,logs}",
+      "ln -s /opt/app /app",
       "rm -rf /var/cache/*",
       "rm -rf /var/log/*"
     ]
