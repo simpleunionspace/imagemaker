@@ -12,12 +12,29 @@
 
 ### Legend
 
-* [COMPANY_NAME-]      = company name
-* {PRODUCT_NAME}       = product name
-* {PRODUCT_VERSION}    = product version
-* {PLATFORM_NAME}      = target platform name (e.g. linux, windows)
-* {IMAGE_BASE_NAME}    = target image os name
-* {IMAGE_BASE_VERSION} = target image os version
+* [COMPANY_NAME-]
+
+  **(optional)** company name
+
+* {PRODUCT_NAME}
+
+  **(required)** product name 
+
+* {PRODUCT_VERSION}
+
+  **(required)** product version
+
+* {PLATFORM_NAME}
+
+  **(required)** target platform name (e.g. linux, windows)
+
+* {IMAGE_BASE_NAME}
+
+  **(required)** target image os name
+
+* {IMAGE_BASE_VERSION}
+
+  **(required)** target image os version
 
 ## Images organizations
 
@@ -27,9 +44,26 @@
 
 ## Image structure
 
-* app
-  * bin
-  * conf
-  * data
-  * logs
-  * tmp
+```shell
+-- opt
+  -- app
+     -- bin
+     -- conf
+     -- data
+     -- logs
+     -- tmp
+```
+
+## Image environment
+
+* TZ
+
+  time zone
+
+* GID
+
+  group ID
+
+* UID
+
+  user ID

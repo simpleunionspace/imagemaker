@@ -1,15 +1,36 @@
 ---
 
 ##################################################
+# common
+##################################################
+
+app_base_path: "/opt/app"
+app_bin_path:  "{{ app_base_path }}/bin"
+app_data_path: "{{ app_base_path }}/data"
+app_conf_path: "{{ app_base_path }}/conf"
+app_logs_path: "{{ app_base_path }}/logs"
+app_tmp_path:  "{{ app_base_path }}/tmp"
+
+##################################################
 # test
 ##################################################
 
-test_repo:   
-test_branch: 
+
 
 ##################################################
 # fluentd
 ##################################################
 
-fluentd_repo:   
-fluentd_branch: 
+fluentd_app:          "fluentd"
+fluentd_install_type: git
+fluentd_repo:         git@github.com:fluent/fluentd.git
+fluentd_branch:       tags/v1.12.3
+
+##################################################
+# transmission
+##################################################
+
+transmision_app:          "transmision"
+transmision_install_type: git
+transmision_repo:         git@github.com:transmission/transmission.git
+transmision_branch:       tags/3.00

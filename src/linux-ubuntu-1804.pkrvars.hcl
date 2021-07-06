@@ -1,4 +1,4 @@
-platform_name           = "linux"
-image_base_name         = "ubuntu"
-image_base_version      = "18.04"
-system_packages_manager = "apt-get"
+i_platform_name           = "linux"
+i_image_base_name         = "ubuntu"
+i_image_base_version      = "18.04"
+i_system_packages_manager = "apt-get"

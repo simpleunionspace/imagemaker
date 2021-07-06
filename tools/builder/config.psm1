@@ -13,6 +13,11 @@ ${WindowsImagesList}     = @("base-windows",
                              "test")
 
 
+${LinuxImagesList}       = @("base-linux",
+                             "test")
+${LinuxPrototypesList}   = @("linux-ubuntu-1804")
+
+
 # functions
 function Get-LinuxPrototypesList
 {

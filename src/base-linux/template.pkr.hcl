@@ -1,27 +1,27 @@
 ##################################################
 # Vars
 ##################################################
-variable "platform_name" {
+variable "i_platform_name" {
   type    = string
   default = null
 }
 
-variable "image_base_name" {
+variable "i_image_base_name" {
   type    = string
   default = null
 }
 
-variable "image_base_version" {
+variable "i_image_base_version" {
   type    = string
   default = null
 }
 
-variable "image_tag_suffix" {
+variable "i_image_tag_suffix" {
   type    = string
   default = null
 }
 
-variable "system_packages_manager" {
+variable "i_system_packages_manager" {
   type    = string
   default = null
 }
@@ -31,18 +31,19 @@ variable "system_packages_manager" {
 # Builder
 ##################################################
 source "docker" "build" {
-  image   = "${var.image_base_name}:${var.image_base_version}"
+  image   = "${var.i_image_base_name}:${var.i_image_base_version}"
   pull    = true
   commit  = true
   changes = [
-    "VOLUME /app/data",
-    "VOLUME /app/conf",
-    "VOLUME /app/logs",
+    "VOLUME /opt/app/data",
+    "VOLUME /opt/app/conf",
+    "VOLUME /opt/app/logs",
+    "VOLUME /opt/app/tmp",
     "ENV TZ=UTC",
-    "ENV CUID=1000",
-    "ENV CGID=1000",
+    "ENV GID=1000",
+    "ENV UID=1000",
     "CMD /bin/bash",
-    "ENTRYPOINT /bin/bash"
+    "ENTRYPOINT /opt/entrypoint.sh"
   ]
 }
 
@@ -54,36 +55,35 @@ build {
   sources = ["source.docker.build"]
 
   provisioner "shell" {
+    inline = [
+      "${var.i_system_packages_manager} -y update",
+      "${var.i_system_packages_manager} -y upgrade",
+    ]
+  }
+
+  provisioner "shell" {
     scripts = [
       "${path.root}/prepare.sh"
     ]
   }
 
   provisioner "shell" {
-    inline = [
-      "${var.system_packages_manager} -y update",
-      "${var.system_packages_manager} -y upgrade",
-    ]
-  }
-
-  provisioner "shell" {
     scripts = [
-      "${path.root}/${var.image_base_name}/prepare.sh"
+      "${path.root}/${var.i_image_base_name}/prepare.sh"
     ]
   }
 
   provisioner "shell" {
     inline = [
-      "${var.system_packages_manager} -y install tree",
-      "${var.system_packages_manager} -y install wget",
-      "${var.system_packages_manager} -y install nano",
-      "${var.system_packages_manager} -y install htop",
-      "${var.system_packages_manager} -y install unzip",
-      "${var.system_packages_manager} -y install ansible",
-      "${var.system_packages_manager} -y autoremove",
-      "${var.system_packages_manager} -y autoremove",
-      "${var.system_packages_manager} -y autoremove",
-      "${var.system_packages_manager} -y clean all"
+      "${var.i_system_packages_manager} -y update",
+      "${var.i_system_packages_manager} -y install tree",
+      "${var.i_system_packages_manager} -y install wget",
+      "${var.i_system_packages_manager} -y install nano",
+      "${var.i_system_packages_manager} -y install ansible",
+      "${var.i_system_packages_manager} -y autoremove",
+      "${var.i_system_packages_manager} -y autoremove",
+      "${var.i_system_packages_manager} -y autoremove",
+      "${var.i_system_packages_manager} -y clean all"
     ]
   }
 
@@ -94,17 +94,25 @@ build {
       "mkdir -p /opt/app/conf",
       "mkdir -p /opt/app/data",
       "mkdir -p /opt/app/logs",
+      "mkdir -p /opt/app/tmp",
       "ln -s /opt/app /app",
       "rm -rf /var/cache/*",
       "rm -rf /var/log/*"
     ]
   }
 
+  provisioner "file" {
+    sources = [
+      "${path.root}/entrypoint.sh",
+    ]
+    destination = "/opt/"
+  }
+
   post-processor "docker-tag" {
     repository = "simpleunionspace/base"
     tags       = [
-      "${var.platform_name}-${var.image_base_name}-${var.image_base_version}-${var.image_tag_suffix}",
-      "${var.platform_name}-${var.image_base_name}-${var.image_base_version}"
+      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
+      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}"
     ]
   }
 }

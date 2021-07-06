@@ -1,27 +1,27 @@
 ##################################################
 # Vars
 ##################################################
-variable "platform_name" {
+variable "i_platform_name" {
   type    = string
   default = null
 }
 
-variable "image_base_name" {
+variable "i_image_base_name" {
   type    = string
   default = null
 }
 
-variable "image_base_version" {
+variable "i_image_base_version" {
   type    = string
   default = null
 }
 
-variable "image_tag_suffix" {
+variable "i_image_tag_suffix" {
   type    = string
   default = null
 }
 
-variable "system_packages_manager" {
+variable "i_system_packages_manager" {
   type    = string
   default = null
 }
@@ -31,12 +31,12 @@ variable "system_packages_manager" {
 # Builder
 ##################################################
 source "docker" "build" {
-  image   = "simpleunionspace/base:${var.platform_name}-${var.image_base_name}-${var.image_base_version}"
+  image   = "simpleunionspace/base:${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}"
   pull    = false
   commit  = true
   changes = [
     "CMD /bin/bash",
-    "ENTRYPOINT /bin/bash"
+    "ENTRYPOINT /bin/bash",
   ]
 }
 
@@ -47,19 +47,35 @@ source "docker" "build" {
 build {
   sources = ["source.docker.build"]
 
-  provisioner "ansible-local" {
-    playbook_file   = "${path.root}/playbook.yaml"
-    extra_arguments = [
-      "--extra-vars",
-      "\"platform_name=${var.platform_name}\""
+  provisioner "shell" {
+    inline = [
+      "mkdir /opt/bootstrap",
+    ]
+  }
+
+  provisioner "file" {
+    sources = [
+      "${path.root}/playbook.yaml",
+      "${path.root}/../deps_install.yaml",
+      "${path.root}/../deps_uninstall.yaml",
+      "${path.root}/../facts.yaml",
+      "${path.root}/../vars.yaml",
+    ]
+    destination = "/opt/bootstrap/"
+  }
+
+  provisioner "shell" {
+    inline = [
+      "ansible-playbook -c local --extra-vars \"i_platform_name=${var.i_platform_name}\" /opt/bootstrap/playbook.yaml",
+      "rm -rf /opt/bootstrap",
     ]
   }
 
   post-processor "docker-tag" {
     repository = "simpleunionspace/fluentd"
     tags       = [
-      "${var.platform_name}-${var.image_base_name}-${var.image_base_version}-${var.image_tag_suffix}",
-      "${var.platform_name}-${var.image_base_name}-${var.image_base_version}"
+      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
+      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}",
     ]
   }
 }

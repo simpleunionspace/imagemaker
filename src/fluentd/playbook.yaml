@@ -1,12 +1,14 @@
 ---
 
-- name: Include common
-  include: ../common.yaml
-
-- name: test
+- name: bootstrap
   hosts: 127.0.0.1
   connection: local
 
   tasks:
-    - command: echo {{ platform_name }}
-    - debug: msg="{{ platform_name }}"
+
+    - include_tasks: deps_install.yaml
+
+    - debug:
+        msg: Platform name = {{ i_platform_name }}
+
+    - include_tasks: deps_uninstall.yaml

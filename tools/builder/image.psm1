@@ -44,7 +44,7 @@ function Invoke-BuildImage
         packer build `
                -force `
                -var-file="$(Convert-Path "${TemplatesDir}/${prototype}.pkrvars.hcl")" `
-               -var "image_tag_suffix=${ImageTagSuffix}" `
+               -var "i_image_tag_suffix=${ImageTagSuffix}" `
                "$(Convert-Path "${TemplatesDir}/${ImageName}/template.pkr.hcl")"
     }
 }

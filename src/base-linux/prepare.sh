@@ -11,4 +11,4 @@ rm -rf /var/cache/*
 rm -rf /var/log/*
 
 rm -rf /etc/localtime
-ln -s /usr/share/zoneinfo/GMT /etc/localtime
+ln -s /usr/share/zoneinfo/UTC /etc/localtime

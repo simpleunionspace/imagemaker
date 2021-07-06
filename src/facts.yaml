@@ -1,0 +1,35 @@
+---
+
+# include
+- name: Include vars
+  include_vars: vars.yaml
+
+
+# facts
+- name: Gathering the fact about the need to debug on install / uninstall
+  set_fact:
+    deps_debug: true
+
+- name: Gathering the fact about the need to install git
+  set_fact:
+    deps_install_git: true
+
+- name: Gathering the fact about the need to install mercurial
+  set_fact:
+    deps_install_mercurial: true
+
+- name: Gathering the fact about the need to install subversion
+  set_fact:
+    deps_install_subversion: true
+
+- name: Gathering the fact about the need to uninstall git
+  set_fact:
+    deps_uninstall_git: true
+
+- name: Gathering the fact about the need to uninstall mercurial
+  set_fact:
+    deps_uninstall_mercurial: true
+
+- name: Gathering the fact about the need to uninstall subversion
+  set_fact:
+    deps_uninstall_subversion: true
