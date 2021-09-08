@@ -26,6 +26,11 @@ variable "i_system_packages_manager" {
   default = null
 }
 
+variable "i_fluentd_version" {
+  type    = string
+  default = null
+}
+
 
 ##################################################
 # Builder
@@ -74,8 +79,8 @@ build {
   post-processor "docker-tag" {
     repository = "simpleunionspace/fluentd"
     tags       = [
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}",
+      "${var.i_fluentd_version}-${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
+      "${var.i_fluentd_version}-${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}",
     ]
   }
 }

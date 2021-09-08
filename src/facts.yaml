@@ -6,30 +6,31 @@
 
 
 # facts
+## deps debug
 - name: Gathering the fact about the need to debug on install / uninstall
   set_fact:
     deps_debug: true
 
+## deps git install/uninstall
 - name: Gathering the fact about the need to install git
   set_fact:
-    deps_install_git: true
-
-- name: Gathering the fact about the need to install mercurial
-  set_fact:
-    deps_install_mercurial: true
-
-- name: Gathering the fact about the need to install subversion
-  set_fact:
-    deps_install_subversion: true
-
+    deps_install_git: false
 - name: Gathering the fact about the need to uninstall git
   set_fact:
-    deps_uninstall_git: true
+    deps_uninstall_git: false
 
+## deps mercurial install/uninstall
+- name: Gathering the fact about the need to install mercurial
+  set_fact:
+    deps_install_mercurial: false
 - name: Gathering the fact about the need to uninstall mercurial
   set_fact:
-    deps_uninstall_mercurial: true
+    deps_uninstall_mercurial: false
 
+## deps subversion install/uninstall
+- name: Gathering the fact about the need to install subversion
+  set_fact:
+    deps_install_subversion: false
 - name: Gathering the fact about the need to uninstall subversion
   set_fact:
-    deps_uninstall_subversion: true
+    deps_uninstall_subversion: false

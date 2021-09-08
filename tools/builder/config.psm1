@@ -12,10 +12,10 @@ ${LinuxImagesList}       = @("base-linux",
 ${WindowsImagesList}     = @("base-windows",
                              "test")
 
-
+# vars override
+${LinuxPrototypesList}   = @("linux-ubuntu-1804")
 ${LinuxImagesList}       = @("base-linux",
                              "test")
-${LinuxPrototypesList}   = @("linux-ubuntu-1804")
 
 
 # functions
@@ -58,9 +58,8 @@ function Get-ImagesListForPublish
 
 function Get-CorrectedImageName {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${ImageName}
     )
     

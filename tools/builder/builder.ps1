@@ -2,10 +2,16 @@ Set-StrictMode -Version 3
 
 
 # vars
-${BasePath} = ${PSScriptRoot}
+${BasePath}       = ${PSScriptRoot}
+${ImageTagSuffix} = $(Get-Date -Format "yyyyMMdd.HHmm")
+${CleanDocker}    = $true
+${BuildLinux}     = $false
+${BuildWindows}   = $false
+${CLIArguments}   = {}
 
 
 # import modules
+Import-Module ${BasePath}/logging.psm1
 Import-Module ${BasePath}/config.psm1
 Import-Module ${BasePath}/image.psm1
 
@@ -14,14 +20,10 @@ Import-Module ${BasePath}/image.psm1
 function CleanLinux {
     ${images} = Get-LinuxImagesList
 
-    Write-Output "**************************************************"
-    Write-Output "***** clean $(${images}.Count) images"
-    Write-Output "**************************************************"
+    Write-LogMessage -Message "clean $(${images}.Count) images"
 
     for ($i=${images}.Count; $i -gt 0; $i--) {
-        Write-Output "**************************************************"
-        Write-Output "***** clean image - $(${images}[$i-1])"
-        Write-Output "**************************************************"
+        Write-LogMessage -Message "clean image - $(${images}[$i-1])"
 
         Invoke-CleanImage -ImageName ${images}[$i-1]
     }
@@ -29,14 +31,10 @@ function CleanLinux {
 function CleanWindows {
     ${images} = Get-WindowsImagesList
 
-    Write-Output "**************************************************"
-    Write-Output "***** clean $(${images}.Count) images"
-    Write-Output "**************************************************"
+    Write-LogMessage -Message "clean $(${images}.Count) images"
 
     for ($i=${images}.Count; $i -gt 0; $i--) {
-        Write-Output "**************************************************"
-        Write-Output "***** clean image - $(${images}[$i-1])"
-        Write-Output "**************************************************"
+        Write-LogMessage -Message "clean image - $(${images}[$i-1])"
 
         Invoke-CleanImage -ImageName ${images}[$i-1]
     }
@@ -44,22 +42,17 @@ function CleanWindows {
 
 function BuildLinux {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${ImageTagSuffix}
     )
 
     ${images} = Get-LinuxImagesList
 
-    Write-Output "**************************************************"
-    Write-Output "***** make $(${images}.Count) images"
-    Write-Output "**************************************************"
+    Write-LogMessage -Message "make $(${images}.Count) images"
 
     foreach (${image} in ${images}) {
-        Write-Output "**************************************************"
-        Write-Output "***** make image - ${image}"
-        Write-Output "**************************************************"
+        Write-LogMessage -Message "make image - ${image}"
 
         Invoke-BuildImage -TemplatesDir "$(Convert-Path "${BasePath}/../../src/")" `
                           -Prototypes $(Get-LinuxPrototypesList) `
@@ -69,22 +62,17 @@ function BuildLinux {
 }
 function BuildWindows {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${ImageTagSuffix}
     )
 
     ${images} = Get-WindowsImagesList
 
-    Write-Output "**************************************************"
-    Write-Output "***** make $(${images}.Count) images"
-    Write-Output "**************************************************"
+    Write-LogMessage -Message "make $(${images}.Count) images"
 
     foreach (${image} in ${images}) {
-        Write-Output "**************************************************"
-        Write-Output "***** make image - ${image}"
-        Write-Output "**************************************************"
+        Write-LogMessage -Message "make image - ${image}"
 
         Invoke-BuildImage -TemplatesDir "$(Convert-Path "${BasePath}/../../src/")" `
                           -Prototypes $(Get-WindowsPrototypesList) `
@@ -96,14 +84,10 @@ function BuildWindows {
 function Publish {
     ${images} = Get-ImagesListForPublish
 
-    Write-Output "**************************************************"
-    Write-Output "***** publish $(${images}.Count) images"
-    Write-Output "**************************************************"
+    Write-LogMessage -Message "publish $(${images}.Count) images"
 
     foreach (${image} in ${images}) {
-        Write-Output "**************************************************"
-        Write-Output "***** publish image - ${image}"
-        Write-Output "**************************************************"
+        Write-LogMessage -Message "publish image - ${image}"
 
         Invoke-PublishImage -ImageName ${image}
     }
@@ -111,17 +95,33 @@ function Publish {
 
 
 # work
-## generate image tag suffix
-${imageTagSuffix} = $(Get-Date -Format "yyyyMMdd.HHmm")
+## analyze cli arguments
+for ($i = 0; $i -lt $args.Count; $i++) {
+}
 ## clean images
-CleanLinux
-CleanWindows
+if (${BuildLinux}) {
+    Write-LogMessage -Message "Clean linux images"
+    CleanLinux
+}
+if (${BuildWindows}) {
+    Write-LogMessage -Message "Clean windows images"
+    CleanWindows
+}
 ## clean docker
-docker container prune -f
-docker volume prune -f
-docker image prune -f
+if (${CleanDocker}) {
+    Write-LogMessage -Message "Clean docker"
+    docker container prune -f
+    docker volume prune -f
+    docker image prune -f
+}
 ## build images
-BuildLinux -ImageTagSuffix ${imageTagSuffix}
-# BuildWindows -ImageTagSuffix ${imageTagSuffix}
+if (${BuildLinux}) {
+    Write-LogMessage -Message "Build linux images"
+    BuildLinux -ImageTagSuffix ${imageTagSuffix}
+}
+if (${BuildWindows}) {
+    Write-LogMessage -Message "Build windows images"
+    BuildWindows -ImageTagSuffix ${imageTagSuffix}
+}
 ## publish images
 # Publish

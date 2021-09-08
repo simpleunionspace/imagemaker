@@ -10,9 +10,8 @@ Import-Module ${BasePath}/config.psm1
 function Invoke-CleanImage
 {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${ImageName}
     )
 
@@ -27,15 +26,14 @@ function Invoke-CleanImage
 function Invoke-BuildImage
 {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${TemplatesDir},
-        [Parameter(Mandatory=$true, Position=1)]
+        [Parameter(Mandatory=$true)]
         [array] ${Prototypes},
-        [Parameter(Mandatory=$true, Position=2)]
+        [Parameter(Mandatory=$true)]
         [string] ${ImageName},
-        [Parameter(Mandatory=$true, Position=3)]
+        [Parameter(Mandatory=$true)]
         [string] ${ImageTagSuffix}
     )
 
@@ -52,9 +50,8 @@ function Invoke-BuildImage
 function Invoke-PublishImage
 {
     [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true, Position=0)]
+    Param (
+        [Parameter(Mandatory=$true)]
         [string] ${ImageName}
     )
 

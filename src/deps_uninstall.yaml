@@ -11,7 +11,7 @@
 ## git
 - name: Check variable 'deps_uninstall_git'
   debug:
-    msg: DEPS install git = {{ deps_uninstall_git }}
+    msg: DEPS uninstall git = {{ deps_uninstall_git }}
   when: deps_debug
 - name: Uninstall git
   package:
@@ -23,7 +23,7 @@
 ## mercurial
 - name: Check variable 'deps_uninstall_mercurial'
   debug:
-    msg: DEPS install mercurial = {{ deps_uninstall_mercurial }}
+    msg: DEPS uninstall mercurial = {{ deps_uninstall_mercurial }}
   when: deps_debug
 - name: Uninstall mercurial
   package:
@@ -35,7 +35,7 @@
 ## subversion
 - name: Check variable 'deps_uninstall_subversion'
   debug:
-    msg: DEPS install subversion = {{ deps_uninstall_subversion }}
+    msg: DEPS uninstall subversion = {{ deps_uninstall_subversion }}
   when: deps_debug
 - name: Uninstall subversion
   package:
