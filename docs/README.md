@@ -6,9 +6,18 @@
   * example: base:linux-ubuntu-20.04
   * example: base:windows-nanoserver-2004
 
-* [COMPANY_NAME-]{PRODUCT_NAME}-{PRODUCT_VERSION}:{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
+* {COMPANY_NAME}-base:{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
+  * example: microsoft-base:windows-nanoserver-2004
+  * example: jetbrains-base:linux-ubuntu-20.04
+
+* [COMPANY_NAME-]{PRODUCT_NAME}-base:{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
+  * example: microsoft-sqlserver-base:windows-nanoserver-2004
+  * example: jetbrains-teamcity-base:linux-ubuntu-20.04
+
+* [COMPANY_NAME-]{PRODUCT_NAME}:{PRODUCT_VERSION}-{PLATFORM_NAME}-{IMAGE_BASE_NAME}-{IMAGE_BASE_VERSION}
   * example: microsoft-sqlserver-2019:windows-nanoserver-2004
-  * example: postgresql-13:linux-ubuntu-20.04
+  * example: jetbrains-teamcity-server-2021:linux-ubuntu-20.04
+  * example: jetbrains-teamcity-agent-2021:linux-ubuntu-20.04
 
 ### Legend
 
@@ -18,7 +27,7 @@
 
 * {PRODUCT_NAME}
 
-  **(required)** product name 
+  **(required)** product name
 
 * {PRODUCT_VERSION}
 

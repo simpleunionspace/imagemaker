@@ -1,10 +1,10 @@
-# Images
+# Image builder
 
-This repository contains images for infrastructure.
+This repository contains image builder for infrastructure.
 
 * on GitHub
-  * [repo](https://github.com/simpleunionspace/images)
-  * [docs](https://simpleunionspace.github.io/images/)
+  * [repo](https://github.com/simpleunionspace/imagebuilder)
+  * [docs](https://simpleunionspace.github.io/imagebuilder/)
 
 * on Docker Hub
   * [docker images](https://hub.docker.com/u/simpleunionspace)
