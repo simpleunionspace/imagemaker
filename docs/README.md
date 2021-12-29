@@ -45,11 +45,25 @@
 
   **(required)** target image os version
 
+## [Prototypes](https://simpleunionspace.github.io/imagemaker/prototypes/)
+
+* linux
+  * centos
+    * 7
+    * 8
+  * ubuntu
+    * 18.04
+    * 20.04
+* windows
+  * nanoserver
+    * 2004
+    * 20H2
+
 ## Images organizations
 
-* base
-  * test
-  * fluentd
+* [base](https://simpleunionspace.github.io/imagemaker/images/base/)
+  * [test](https://simpleunionspace.github.io/imagemaker/images/test/)
+  * [fluentd](https://simpleunionspace.github.io/imagemaker/images/fluentd/)
 
 ## Image structure
 
