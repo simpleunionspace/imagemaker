@@ -1,27 +1,42 @@
 ##################################################
 # Vars
 ##################################################
-variable "i_platform_name" {
+variable "im_platform_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_name" {
+variable "im_source_docker_repository_name" {
+  type    = string
+  default = ""
+}
+
+variable "im_source_image_base_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_version" {
+variable "im_source_image_base_version" {
   type    = string
   default = null
 }
 
-variable "i_image_tag_suffix" {
+variable "im_system_packages_manager" {
   type    = string
   default = null
 }
 
-variable "i_system_packages_manager" {
+variable "im_target_name" {
+  type    = string
+  default = "docker"
+}
+
+variable "im_target_docker_repository_name" {
+  type    = string
+  default = "simpleunionspace/base"
+}
+
+variable "im_target_docker_image_tag_suffix" {
   type    = string
   default = null
 }
@@ -31,7 +46,7 @@ variable "i_system_packages_manager" {
 # Builder
 ##################################################
 source "docker" "build" {
-  image   = "${var.i_image_base_name}:${var.i_image_base_version}"
+  image   = "${var.im_source_docker_repository_name}${var.im_source_image_base_name}:${var.im_source_image_base_version}"
   pull    = true
   commit  = true
   changes = [
@@ -52,12 +67,12 @@ source "docker" "build" {
 # Build
 ##################################################
 build {
-  sources = ["source.docker.build"]
+  sources = ["source.${var.im_target_name}.build"]
 
   provisioner "shell" {
     inline = [
-      "${var.i_system_packages_manager} -y update",
-      "${var.i_system_packages_manager} -y upgrade",
+      "${var.im_system_packages_manager} -y update",
+      "${var.im_system_packages_manager} -y upgrade",
     ]
   }
 
@@ -69,21 +84,21 @@ build {
 
   provisioner "shell" {
     scripts = [
-      "${path.root}/${var.i_image_base_name}/prepare.sh"
+      "${path.root}/${var.im_source_image_base_name}/prepare.sh"
     ]
   }
 
   provisioner "shell" {
     inline = [
-      "${var.i_system_packages_manager} -y update",
-      "${var.i_system_packages_manager} -y install tree",
-      "${var.i_system_packages_manager} -y install wget",
-      "${var.i_system_packages_manager} -y install nano",
-      "${var.i_system_packages_manager} -y install ansible",
-      "${var.i_system_packages_manager} -y autoremove",
-      "${var.i_system_packages_manager} -y autoremove",
-      "${var.i_system_packages_manager} -y autoremove",
-      "${var.i_system_packages_manager} -y clean all"
+      "${var.im_system_packages_manager} -y update",
+      "${var.im_system_packages_manager} -y install tree",
+      "${var.im_system_packages_manager} -y install wget",
+      "${var.im_system_packages_manager} -y install nano",
+      "${var.im_system_packages_manager} -y install ansible",
+      "${var.im_system_packages_manager} -y autoremove",
+      "${var.im_system_packages_manager} -y autoremove",
+      "${var.im_system_packages_manager} -y autoremove",
+      "${var.im_system_packages_manager} -y clean all"
     ]
   }
 
@@ -109,10 +124,10 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "simpleunionspace/base"
+    repository = "${var.im_target_docker_repository_name}"
     tags       = [
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}"
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}-${var.im_target_docker_image_tag_suffix}",
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
     ]
   }
 }

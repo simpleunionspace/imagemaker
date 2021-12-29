@@ -1,22 +1,42 @@
 ##################################################
 # Vars
 ##################################################
-variable "i_platform_name" {
+variable "im_platform_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_name" {
+variable "im_source_docker_repository_name" {
+  type    = string
+  default = "mcr.microsoft.com/windows/"
+}
+
+variable "im_source_image_base_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_version" {
+variable "im_source_image_base_version" {
   type    = string
   default = null
 }
 
-variable "i_image_tag_suffix" {
+variable "im_system_packages_manager" {
+  type    = string
+  default = null
+}
+
+variable "im_target_name" {
+  type    = string
+  default = "docker"
+}
+
+variable "im_target_docker_repository_name" {
+  type    = string
+  default = "simpleunionspace/base"
+}
+
+variable "im_target_docker_image_tag_suffix" {
   type    = string
   default = null
 }
@@ -26,7 +46,7 @@ variable "i_image_tag_suffix" {
 # Builder
 ##################################################
 source "docker" "build" {
-  image   = "mcr.microsoft.com/windows/${var.i_image_base_name}:${var.i_image_base_version}"
+  image   = "${var.im_source_docker_repository_name}${var.im_source_image_base_name}:${var.im_source_image_base_version}"
   pull    = true
   commit  = true
   changes = [
@@ -47,7 +67,7 @@ source "docker" "build" {
 # Build
 ##################################################
 build {
-  sources = ["source.docker.build"]
+  sources = ["source.${var.im_target_name}.build"]
 
   provisioner "powershell" {
     inline = [
@@ -63,7 +83,7 @@ build {
 
   provisioner "powershell" {
     scripts = [
-      "${path.root}/${var.i_image_base_name}/prepare.ps1"
+      "${path.root}/${var.im_source_image_base_name}/prepare.ps1"
     ]
   }
 
@@ -92,10 +112,10 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "simpleunionspace/base"
+    repository = "${var.im_target_docker_repository_name}"
     tags       = [
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}"
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}-${var.im_target_docker_image_tag_suffix}",
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
     ]
   }
 }

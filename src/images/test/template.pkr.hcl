@@ -1,27 +1,42 @@
 ##################################################
 # Vars
 ##################################################
-variable "i_platform_name" {
+variable "im_platform_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_name" {
+variable "im_source_docker_repository_name" {
+  type    = string
+  default = "simpleunionspace/base"
+}
+
+variable "im_source_image_base_name" {
   type    = string
   default = null
 }
 
-variable "i_image_base_version" {
+variable "im_source_image_base_version" {
   type    = string
   default = null
 }
 
-variable "i_image_tag_suffix" {
+variable "im_system_packages_manager" {
   type    = string
   default = null
 }
 
-variable "i_system_packages_manager" {
+variable "im_target_name" {
+  type    = string
+  default = "docker"
+}
+
+variable "im_target_docker_repository_name" {
+  type    = string
+  default = "simpleunionspace/test"
+}
+
+variable "im_target_docker_image_tag_suffix" {
   type    = string
   default = null
 }
@@ -31,8 +46,8 @@ variable "i_system_packages_manager" {
 # Builder
 ##################################################
 source "docker" "build" {
-  image   = "simpleunionspace/base:${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}"
-  pull    = false
+  image   = "${var.im_source_docker_repository_name}:${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
+  pull    = true
   commit  = true
   changes = [
     "CMD /bin/bash",
@@ -45,7 +60,7 @@ source "docker" "build" {
 # Build
 ##################################################
 build {
-  sources = ["source.docker.build"]
+  sources = ["source.${var.im_target_name}.build"]
 
   provisioner "shell" {
     inline = [
@@ -66,16 +81,16 @@ build {
 
   provisioner "shell" {
     inline = [
-      "ansible-playbook -c local --extra-vars \"i_platform_name=${var.i_platform_name}\" /opt/bootstrap/playbook.yaml",
+      "ansible-playbook -c local --extra-vars \"im_platform_name=${var.im_platform_name}\" /opt/bootstrap/playbook.yaml",
       "rm -rf /opt/bootstrap",
     ]
   }
 
   post-processor "docker-tag" {
-    repository = "simpleunionspace/test"
+    repository = "${var.im_target_docker_repository_name}"
     tags       = [
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}-${var.i_image_tag_suffix}",
-      "${var.i_platform_name}-${var.i_image_base_name}-${var.i_image_base_version}",
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}-${var.im_target_docker_image_tag_suffix}",
+      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}",
     ]
   }
 }

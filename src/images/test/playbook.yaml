@@ -9,6 +9,6 @@
     - include_tasks: deps_install.yaml
 
     - debug:
-        msg: Platform name = {{ i_platform_name }}
+        msg: Platform name = {{ im_platform_name }}
 
     - include_tasks: deps_uninstall.yaml
