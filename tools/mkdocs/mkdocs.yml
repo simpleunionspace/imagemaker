@@ -1,0 +1,10 @@
+docs_dir: ./../../docs
+site_dir: site
+site_name: SU image maker
+use_directory_urls: false
+repo_url: https://github.com/simpleunionspace/imagemaker/docs
+nav:
+    - Home:    README.md
+    - base:    base/README.md
+    - fluentd: fluentd/README.md
+theme: readthedocs

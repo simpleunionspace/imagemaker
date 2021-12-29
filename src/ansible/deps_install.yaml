@@ -1,0 +1,45 @@
+---
+
+# include
+- name: Include vars
+  include_vars: vars.yaml
+- name: Include facts
+  include_tasks: facts.yaml
+
+
+# tasks
+## git
+- name: Check variable 'deps_install_git'
+  debug:
+    msg: DEPS install git = {{ deps_install_git }}
+  when: deps_debug
+- name: Install git
+  package:
+    name:
+      - git
+    state: latest
+  when: deps_install_git
+
+## mercurial
+- name: Check variable 'deps_install_mercurial'
+  debug:
+    msg: DEPS install mercurial = {{ deps_install_mercurial }}
+  when: deps_debug
+- name: Install mercurial
+  package:
+    name:
+      - mercurial
+    state: latest
+  when: deps_install_mercurial
+
+## subversion
+- name: Check variable 'deps_install_subversion'
+  debug:
+    msg: DEPS install subversion = {{ deps_install_subversion }}
+  when: deps_debug
+- name: Install subversion
+  package:
+    name:
+      - subversion
+    state: latest
+  when: deps_install_subversion

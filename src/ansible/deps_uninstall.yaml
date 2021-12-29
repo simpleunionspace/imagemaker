@@ -1,0 +1,45 @@
+---
+
+# include
+- name: Include vars
+  include_vars: vars.yaml
+- name: Include facts
+  include_tasks: facts.yaml
+
+
+# tasks
+## git
+- name: Check variable 'deps_uninstall_git'
+  debug:
+    msg: DEPS uninstall git = {{ deps_uninstall_git }}
+  when: deps_debug
+- name: Uninstall git
+  package:
+    name:
+      - git
+    state: absent
+  when: deps_uninstall_git
+
+## mercurial
+- name: Check variable 'deps_uninstall_mercurial'
+  debug:
+    msg: DEPS uninstall mercurial = {{ deps_uninstall_mercurial }}
+  when: deps_debug
+- name: Uninstall mercurial
+  package:
+    name:
+      - mercurial
+    state: absent
+  when: deps_uninstall_mercurial
+
+## subversion
+- name: Check variable 'deps_uninstall_subversion'
+  debug:
+    msg: DEPS uninstall subversion = {{ deps_uninstall_subversion }}
+  when: deps_debug
+- name: Uninstall subversion
+  package:
+    name:
+      - subversion
+    state: absent
+  when: deps_uninstall_subversion
