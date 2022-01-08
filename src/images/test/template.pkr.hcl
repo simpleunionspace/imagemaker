@@ -49,10 +49,6 @@ source "docker" "build" {
   image   = "${var.im_source_docker_repository_name}:${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
   pull    = true
   commit  = true
-  changes = [
-    "CMD /bin/bash",
-    "ENTRYPOINT /bin/bash",
-  ]
 }
 
 

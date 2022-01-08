@@ -45,4 +45,4 @@ Desktop.ini
 /tmp/*
 /bin/*
 /rpm/*
-/site/*
+/tools/mkdocs/site/*

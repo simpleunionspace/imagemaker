@@ -1,6 +1,6 @@
 # Image Maker
 
-This repository contains image maker.
+This repository contains Image Maker.
 
 * on GitHub
   * [repo](https://github.com/simpleunionspace/imagemaker)

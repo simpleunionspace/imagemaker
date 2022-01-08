@@ -2,3 +2,6 @@
 	path = tools/powershell-scripts
 	url = git@github.com:simpleunionspace/powershell-scripts.git
 	branch = master
+[submodule "tools/powershell-templating"]
+	path = tools/powershell-templating
+	url = git@github.com:simpleunionspace/powershell-templating.git

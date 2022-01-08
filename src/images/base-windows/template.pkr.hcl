@@ -58,7 +58,7 @@ source "docker" "build" {
     "ENV GID=1000",
     "ENV UID=1000",
     "CMD powershell",
-    "ENTRYPOINT C:\entrypoint.ps1"
+    "ENTRYPOINT C:\opt\entrypoint.ps1"
   ]
 }
 

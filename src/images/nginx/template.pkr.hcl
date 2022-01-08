@@ -33,7 +33,7 @@ variable "im_target_name" {
 
 variable "im_target_docker_repository_name" {
   type    = string
-  default = "simpleunionspace/fluentd"
+  default = "simpleunionspace/nginx"
 }
 
 variable "im_target_docker_image_tag_suffix" {

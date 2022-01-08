@@ -45,7 +45,7 @@
 
   **(required)** target image os version
 
-## [Prototypes](https://simpleunionspace.github.io/imagemaker/prototypes/)
+## [Prototypes](prototypes/)
 
 * linux
   * centos
@@ -61,21 +61,22 @@
 
 ## Images organizations
 
-* [base](https://simpleunionspace.github.io/imagemaker/images/base/)
-  * [test](https://simpleunionspace.github.io/imagemaker/images/test/)
-  * [fluentd](https://simpleunionspace.github.io/imagemaker/images/fluentd/)
+* [base](images/base/)
+  * [test](images/test/)
+  * [fluentd](images/fluentd/)
+  * [nginx](images/nginx/)
 
 ## Image structure
 
 ```shell
 -- opt
-  -- app
-     -- bin
-     -- conf
-     -- data
-     -- logs
-     -- tmp
-```
+   -- app
+      -- bin
+      -- conf
+      -- data
+      -- logs
+      -- tmp
+``` 
 
 ## Image environment
 
