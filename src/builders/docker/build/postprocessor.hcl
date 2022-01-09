@@ -1,7 +1,3 @@
-##################################################
-# Build
-##################################################
-build {
   post-processor "docker-tag" {
     repository = "${var.im_target_docker_repository_name}"
     tags       = [
@@ -9,4 +5,3 @@ build {
       "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
     ]
   }
-}

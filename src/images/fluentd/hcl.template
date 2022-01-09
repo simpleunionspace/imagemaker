@@ -6,9 +6,14 @@ variable "im_platform_name" {
   default = null
 }
 
+variable "im_source_docker_repository_prefix" {
+  type    = string
+  default = "simpleunionspace/"
+}
+
 variable "im_source_docker_repository_name" {
   type    = string
-  default = "simpleunionspace/base"
+  default = "${var.im_source_docker_repository_prefix}base"
 }
 
 variable "im_source_image_base_name" {
@@ -31,9 +36,14 @@ variable "im_target_name" {
   default = "docker"
 }
 
+variable "im_target_docker_repository_prefix" {
+  type    = string
+  default = "simpleunionspace/"
+}
+
 variable "im_target_docker_repository_name" {
   type    = string
-  default = "simpleunionspace/test"
+  default = "${var.im_target_docker_repository_prefix}fluentd"
 }
 
 variable "im_target_docker_image_tag_suffix" {
@@ -82,11 +92,6 @@ build {
     ]
   }
 
-  post-processor "docker-tag" {
-    repository = "${var.im_target_docker_repository_name}"
-    tags       = [
-      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}-${var.im_target_docker_image_tag_suffix}",
-      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}",
-    ]
-  }
+<%= Get-Content -Path ./../../builders/${var.im_target_name}/build/postprocessor.hcl %>
+
 }

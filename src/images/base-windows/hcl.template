@@ -6,9 +6,14 @@ variable "im_platform_name" {
   default = null
 }
 
+variable "im_source_docker_repository_prefix" {
+  type    = string
+  default = ""
+}
+
 variable "im_source_docker_repository_name" {
   type    = string
-  default = "mcr.microsoft.com/windows/"
+  default = "${var.im_source_docker_repository_prefix}"
 }
 
 variable "im_source_image_base_name" {
@@ -31,9 +36,14 @@ variable "im_target_name" {
   default = "docker"
 }
 
+variable "im_target_docker_repository_prefix" {
+  type    = string
+  default = "simpleunionspace/"
+}
+
 variable "im_target_docker_repository_name" {
   type    = string
-  default = "simpleunionspace/base"
+  default = "${var.im_target_docker_repository_prefix}base"
 }
 
 variable "im_target_docker_image_tag_suffix" {
@@ -95,12 +105,13 @@ build {
 
   provisioner "powershell" {
     inline = [
-      New-Item -Path "c:\"    -Name "app"  -ItemType "directory",
-      New-Item -Path "c:\app" -Name "bin"  -ItemType "directory",
-      New-Item -Path "c:\app" -Name "conf" -ItemType "directory",
-      New-Item -Path "c:\app" -Name "data" -ItemType "directory",
-      New-Item -Path "c:\app" -Name "logs" -ItemType "directory",
-      New-Item -Path "c:\app" -Name "tmp"  -ItemType "directory",
+      New-Item -Path "c:\"        -Name "opt"  -ItemType "directory",
+      New-Item -Path "c:\opt\"    -Name "app"  -ItemType "directory",
+      New-Item -Path "c:\opt\app" -Name "bin"  -ItemType "directory",
+      New-Item -Path "c:\opt\app" -Name "conf" -ItemType "directory",
+      New-Item -Path "c:\opt\app" -Name "data" -ItemType "directory",
+      New-Item -Path "c:\opt\app" -Name "logs" -ItemType "directory",
+      New-Item -Path "c:\opt\app" -Name "tmp"  -ItemType "directory",
     ]
   }
 
@@ -108,14 +119,9 @@ build {
     sources = [
       "${path.root}/entrypoint.ps1",
     ]
-    destination = "C:\"
+    destination = "C:\opt\"
   }
 
-  post-processor "docker-tag" {
-    repository = "${var.im_target_docker_repository_name}"
-    tags       = [
-      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}-${var.im_target_docker_image_tag_suffix}",
-      "${var.im_platform_name}-${var.im_source_image_base_name}-${var.im_source_image_base_version}"
-    ]
-  }
+<%= Get-Content -Path ./../../builders/${var.im_target_name}/build/postprocessor.hcl %>
+
 }
