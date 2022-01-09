@@ -11,9 +11,11 @@ This repository contains Image Maker.
 
 ## Repository structure
 
-* docs  - documentation
-* src   - source files
-* tools - tools files
+| Directory | Description   |
+| --------- | ------------- |
+| docs      | documentation |
+| src       | source files  |
+| tools     | tools files   |
 
 ## First step
 
