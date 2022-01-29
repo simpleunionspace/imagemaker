@@ -1,54 +1,16 @@
 ##################################################
 # Vars
 ##################################################
-variable "im_platform_name" {
-  type    = string
-  default = null
-}
-
-variable "im_source_docker_repository_prefix" {
-  type    = string
-  default = "simpleunionspace/"
-}
+<%= Include-CoreVars %>
 
 variable "im_source_docker_repository_name" {
   type    = string
   default = "${var.im_source_docker_repository_prefix}base"
 }
 
-variable "im_source_image_base_name" {
-  type    = string
-  default = null
-}
-
-variable "im_source_image_base_version" {
-  type    = string
-  default = null
-}
-
-variable "im_system_packages_manager" {
-  type    = string
-  default = null
-}
-
-variable "im_target_name" {
-  type    = string
-  default = "docker"
-}
-
-variable "im_target_docker_repository_prefix" {
-  type    = string
-  default = "simpleunionspace/"
-}
-
 variable "im_target_docker_repository_name" {
   type    = string
   default = "${var.im_target_docker_repository_prefix}fluentd"
-}
-
-variable "im_target_docker_image_tag_suffix" {
-  type    = string
-  default = null
 }
 
 
@@ -66,7 +28,9 @@ source "docker" "build" {
 # Build
 ##################################################
 build {
-  sources = ["source.${var.im_target_name}.build"]
+  sources = ["source.<%= ${IM_BUILDER_NAME} %>.build"]
+
+<%= Include-BeginProvisioner -Builder ${IM_BUILDER_NAME} %>
 
   provisioner "shell" {
     inline = [
@@ -92,6 +56,10 @@ build {
     ]
   }
 
-<%= Get-Content -Path ./../../builders/${var.im_target_name}/build/postprocessor.hcl %>
+<%= Include-EndProvisioner -Builder ${IM_BUILDER_NAME} %>
+
+<%= Include-BeginPostprocessor -Builder ${IM_BUILDER_NAME} %>
+
+<%= Include-EndPostprocessor -Builder ${IM_BUILDER_NAME} %>
 
 }

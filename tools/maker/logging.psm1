@@ -3,9 +3,11 @@ ${BasePath} = ${PSScriptRoot}
 
 
 # functions
-function Write-LogMessage {
+function Write-LogMessage
+{
     [CmdletBinding()]
-    Param (
+    Param
+    (
         [Parameter(Mandatory=$true)]
         [string] ${Message}
     )

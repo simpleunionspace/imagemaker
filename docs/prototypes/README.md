@@ -1,12 +1,8 @@
 # Prototypes
 
-## Naming rules
+## Overview
 
-``` bash
-base:${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
-```
-* example: base:linux-ubuntu-20.04
-* example: base:windows-nanoserver-2004
+Base OS image.
 
 ## Prototypes list
 

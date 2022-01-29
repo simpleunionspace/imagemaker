@@ -6,26 +6,26 @@
 base:${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
 ```
 * example: base:linux-ubuntu-20.04
-* example: base:windows-nanoserver-2004
+* example: base:windows-servercore-ltsc2019
 
 ``` bash
 ${COMPANY_NAME}-base:${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
 ```
-* example: microsoft-base:windows-nanoserver-2004
+* example: microsoft-base:windows-servercore-ltsc2019
 * example: jetbrains-base:linux-ubuntu-20.04
 
 ``` bash
 [COMPANY_NAME-]${PRODUCT_NAME}-base:${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
 ```
-* example: microsoft-sqlserver-base:windows-nanoserver-2004
+* example: microsoft-sqlserver-base:windows-servercore-ltsc2019
 * example: jetbrains-teamcity-base:linux-ubuntu-20.04
 
 ``` bash
-[COMPANY_NAME-]${PRODUCT_NAME}:${PRODUCT_VERSION}-${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
+[COMPANY_NAME-]${PRODUCT_NAME}[-PRODUCT_COMPONENT]:${PRODUCT_VERSION}-${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
 ```
-* example: microsoft-sqlserver-2019:windows-nanoserver-2004
-* example: jetbrains-teamcity-server-2021:linux-ubuntu-20.04
-* example: jetbrains-teamcity-agent-2021:linux-ubuntu-20.04
+* example: microsoft-sqlserver:2019-windows-servercore-ltsc2019
+* example: jetbrains-teamcity-server:2021-linux-ubuntu-20.04
+* example: jetbrains-teamcity-agent:2021-linux-ubuntu-20.04
 
 ### Legend
 
@@ -38,6 +38,11 @@ ${COMPANY_NAME}-base:${PLATFORM_NAME}-${IMAGE_BASE_NAME}-${IMAGE_BASE_VERSION}
 ${PRODUCT_NAME}
 ```
 **(REQUIRED)** product name
+
+``` bash
+[-PRODUCT_COMPONENT]
+```
+**(OPTIONAL)** product component
 
 ``` bash
 ${PRODUCT_VERSION}
